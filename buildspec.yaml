@@ -8,7 +8,7 @@ env:
 phases:
   install:
     runtime-versions:
-      java: corretto17         # Use corretto8, corretto17 if needed
+      java: corretto8        # Use corretto8, corretto17 if needed
     commands:
       - echo Installing Maven...
       - yum install -y maven
@@ -27,23 +27,17 @@ phases:
     commands:
       post_build:
   commands:
-    - echo Build complete. Uploading artifact to S3...
-
-    - ARTIFACT_FILE=$(find target -name "*.war" | head -n 1)
-
-    - if [ -z "$ARTIFACT_FILE" ]; then
-        echo "❌ ERROR: No WAR file found in target/; build likely failed.";
-        exit 1;
-      fi
-
-    - echo "Found artifact: $ARTIFACT_FILE"
-    - aws s3 cp "$ARTIFACT_FILE" "s3://$ARTIFACT_BUCKET/$ARTIFACT_PATH"
-    - echo "Artifact pushed to s3://$ARTIFACT_BUCKET/$ARTIFACT_PATH"
-
+- echo Build complete. Uploading artifact to S3...
+      - |
+        ARTIFACT_FILE=$(ls target/*.war | head -n 1)
+        echo "Found artifact: $ARTIFACT_FILE"
+        aws s3 cp "$ARTIFACT_FILE" "s3://$ARTIFACT_BUCKET/$ARTIFACT_PATH"
+      - echo Artifact pushed to s3://$ARTIFACT_BUCKET/$ARTIFACT_PATH
 artifacts:
   files:
     - target/*.war
   discard-paths: yes
+
 
 
 
