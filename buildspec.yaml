@@ -27,7 +27,7 @@ phases:
     commands:
       post_build:
   commands:
-- echo Build complete. Uploading artifact to S3...
+      - echo Build complete. Uploading artifact to S3...
       - |
         ARTIFACT_FILE=$(ls target/*.war | head -n 1)
         echo "Found artifact: $ARTIFACT_FILE"
@@ -37,6 +37,7 @@ artifacts:
   files:
     - target/*.war
   discard-paths: yes
+
 
 
 
