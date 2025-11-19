@@ -8,7 +8,7 @@ env:
 phases:
   install:
     runtime-versions:
-      java: corretto11         # Use corretto8, corretto17 if needed
+      java: corretto17         # Use corretto8, corretto17 if needed
     commands:
       - echo Installing Maven...
       - yum install -y maven
@@ -36,4 +36,5 @@ artifacts:
   files:
     - target/*.war
   discard-paths: yes
+
 
