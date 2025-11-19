@@ -25,18 +25,19 @@ phases:
 
   post_build:
     commands:
-      post_build:
-  commands:
       - echo Build complete. Uploading artifact to S3...
       - |
         ARTIFACT_FILE=$(ls target/*.war | head -n 1)
         echo "Found artifact: $ARTIFACT_FILE"
         aws s3 cp "$ARTIFACT_FILE" "s3://$ARTIFACT_BUCKET/$ARTIFACT_PATH"
       - echo Artifact pushed to s3://$ARTIFACT_BUCKET/$ARTIFACT_PATH
+      
+      
 artifacts:
   files:
     - target/*.war
   discard-paths: yes
+
 
 
 
